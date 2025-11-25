@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #222;
+  background-color: #ffffff;
+  /* display:flex 제거 */
+  /* justify-content, align-items 제거 */
+}
+
+.center-text {
+  text-align: center;
+  margin-top: 100px; /* 화면 상단에서 내려오게 위치 조정 */
+}
+
+.note {
+  display: none;          /* 기본은 숨김 */
+  margin-top: 10px;       /* 텍스트 아래 간격 */
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.two-column {
+  display: flex;
+  justify-content: center; /* 칼럼 가로 중앙 정렬 */
+  gap: 20px;               /* 칼럼 간 간격 */
+}
+
+.column {
+  width: 200px;
+  text-align: center;
+  padding: 10px;
+}
+
+
+.clickable {
+  cursor: pointer;
+  transition: font-weight 0.2s;
+}
+
+/* 호버 시 볼드 */
+.clickable:hover {
+  font-weight: bold;
+}
+
+.percent-bar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* 바 + 숫자를 위아래로 배치 */
+  align-items: center;    /* 가로 중앙정렬 */
+  justify-content: center; /* 세로 중앙정렬(필요시) */
+  margin-top: 20px;       /* noteEo 글과 간격 */
+}
+.percent-bar {
+  width: 40vw;          /* 바 길이 줄이기 */
+  max-width: 300px;     /* 너무 길어지는 것 방지 */
+  height: 3vh;
+  background-color: #ddd;
+  margin: 0 auto;       /* 가운데 배치 */
+}
+
+
+.percent-fill {
+  height: 100%;
+  width: 0%;
+  background-color: #4a90e2;
+  transition: width 0.2s ease;
+}
+
+.percent-value {
+  margin-top: 1vh;
+  font-size: 2vw;
+  font-family: "AlefB";
+}
+
+#ipGood, #ipBad {
+  white-space: normal;    /* 줄바꿈 허용 */
+  word-break: break-word; /* 긴 단어도 자동 줄바꿈 */
+  overflow-x: hidden;     /* 가로 스크롤 제거 */
+}
+
+
+@media screen and (max-width: 768px) {
+  .two-column {
+    flex-direction: column;  /* 모바일만 세로로 */
+    gap: 10px;
+    align-items: center;
+  }
+
+  .column {
+    width: 90%;             /* 화면 폭에 맞춤 */
+    min-width: 150px;
+    padding: 5px;
+  }
+
+  textarea {
+    width: 100% !important;
+    font-size: 14px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .percent-bar {
+    width: 90%;             /* 모바일 전용 */
+  }
+
+  .percent-value {
+    font-size: 4vw;
+  }
+
+  #floatingBad, #floatingGood {
+    font-size: 12px;
+  }
+
+  .center-text {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  textarea {
+    height: 60px !important;
+  }
+
+  .percent-value {
+    font-size: 5vw;
+  }
+
+  button {
+    font-size: 12px;
+  }
+}
