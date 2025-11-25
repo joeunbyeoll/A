@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>A양</title>
+<link rel="stylesheet" href="a.css">
+<style>
+  #ipGood div, #ipBad div { text-align:left; }
+  button.replyBtn { margin-left:5px; }
+</style>
+</head>
+<body>
+<div class="center-text">
+  <p>
+    <span class="clickable" onclick="toggleNote('noteA','top')">A양</span>은
+    <span class="clickable" onclick="toggleNote('noteEo','top')"> 어떤</span>
+    <span class="clickable" onclick="toggleNote('noteS','top')"> 사람</span><span class="clickable" onclick="toggleNote('noteIp','top')">입니까?</span>
+  </p>
+
+  <!-- 기존 Good/Bad 영역 -->
+  <div id="noteA" class="note" data-group="top" style="display:none;">
+    <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과 
+    ---------------------------------------------------------------------------------
+    <span class="clickable" onclick="toggleNote('noteBad')">나쁜별</span> 사이<br>
+    어떤 조은별
+    <div class="two-column">
+      <div class="column note" id="noteGood">
+        <h4>좋은별에 대한 미담</h4>
+        <textarea id="goodText" placeholder="좋은별에 대한 미담을 적어주세요" style="width:100%; height:80px;"></textarea>
+        <button onclick="saveGood()">저장</button>
+        <div id="goodSaved" style="white-space:pre-wrap;"></div>
+      </div>
+      <div class="column note" id="noteBad">
+        <h4>나쁜별에 대한 음모론</h4>
+        <textarea id="badText" placeholder="나쁜별에 대한 음모론을 적어주세요" style="width:100%; height:80px;"></textarea>
+        <button onclick="saveBad()">저장</button>
+        <div id="badSaved" style="white-space:pre-wrap;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 퍼센트바 영역 -->
+  <div id="noteEo" class="note" data-group="top">
+    <p>A양은 누구입니까?</p>
+    <div class="percent-bar-container">
+      <div class="percent-bar" id="voteBar">
+        <div class="percent-fill" id="voteFill"></div>
+      </div>
+      <div class="percent-value" id="voteValue">0%</div>
+    </div>
+  </div>
+
+  <!-- noteS 영역 (화면 표시 없음) -->
+  <div id="noteS" class="note" data-group="top">
+    A양의 매력이 무엇인가요?<br>
+    <textarea id="noteSText" placeholder="솔직하게ㅋㅋ" style="width:30%; height:80px;"></textarea><br>
+    <button onclick="saveNoteS()">저장</button>
+  </div>
+
+  <!-- IP Good/Bad 영역 -->
+  <div id="noteIp" class="note" data-group="top" style="position:relative; min-height:300px;">
+    <p>A양을 두고 벌어지는 갑론을박에 참여하세요</p>
+    <div id="ipGood" style="white-space:normal; margin-bottom:15px;">불러오는 중...</div>
+    <div id="ipBad" style="white-space:normal;">불러오는 중...</div>
+
+    <!-- 둥둥 떠다니는 글자 -->
+    <span id="floatingBad" onclick="goToBad()" style="position:absolute; cursor:pointer; color:black; font-weight:bold;">
+      음모론 퍼뜨리러 가기
+    </span>
+    <span id="floatingGood" onclick="goToGood()" style="position:absolute; cursor:pointer; color:black; font-weight:bold;">
+      미담 퍼뜨리러 가기
+    </span>
+  </div>
+</div>
+
+<script>
+function toggleNote(noteId, group) {
+  const note = document.getElementById(noteId);
+  if (group) {
+    const groupNotes = document.querySelectorAll(`.note[data-group='${group}']`);
+    groupNotes.forEach(n => {
+      if (n.id !== noteId) {
+        n.style.display = 'none';
+        n.querySelectorAll('.note').forEach(c => c.style.display = 'none');
+      }
+    });
+  }
+  note.style.display = (note.style.display === 'block') ? 'none' : 'block';
+}
+window.toggleNote = toggleNote;
+
+function goToBad() {
+  toggleNote('noteA'); 
+  document.getElementById('noteBad').style.display = 'block';
+  document.getElementById('noteBad').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('noteIp').style.display = 'none';
+}
+
+function goToGood() {
+  toggleNote('noteA'); 
+  document.getElementById('noteGood').style.display = 'block';
+  document.getElementById('noteGood').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('noteIp').style.display = 'none';
+}
+window.goToGood = goToGood;
+
+// ------------------------
+// 둥둥 떠다니는 글자 움직임
+// ------------------------
+const floatingBad = document.getElementById('floatingBad');
+const floatingGood = document.getElementById('floatingGood');
+const container = document.getElementById('noteIp');
+
+let posX_B = 0, posY_B = 0;
+let posX_G = 0, posY_G = 0;
+let deltaX_B = 1, deltaY_B = 1;
+let deltaX_G = 1, deltaY_G = 0.3;
+
+function initFloatingPositions() {
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  posX_B = Math.random() * (width - floatingBad.offsetWidth);
+  posY_B = Math.random() * (height - floatingBad.offsetHeight);
+
+  posX_G = Math.random() * (width - floatingGood.offsetWidth);
+  posY_G = Math.random() * (height - floatingGood.offsetHeight);
+
+  floatingBad.style.left = posX_B + 'px';
+  floatingBad.style.top = posY_B + 'px';
+
+  floatingGood.style.left = posX_G + 'px';
+  floatingGood.style.top = posY_G + 'px';
+}
+
+window.onload = initFloatingPositions;
+window.onresize = initFloatingPositions;
+
+function moveFloating() {
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  // Bad
+  const width_B = width - floatingBad.offsetWidth;
+  const height_B = height - floatingBad.offsetHeight;
+  posX_B += deltaX_B;
+  posY_B += deltaY_B;
+  if(posX_B <= 0 || posX_B >= width_B) deltaX_B *= -1;
+  if(posY_B <= 0 || posY_B >= height_B) deltaY_B *= -1;
+  floatingBad.style.left = posX_B + 'px';
+  floatingBad.style.top = posY_B + 'px';
+
+  // Good
+  const width_G = width - floatingGood.offsetWidth;
+  const height_G = height - floatingGood.offsetHeight;
+  posX_G += deltaX_G;
+  posY_G += deltaY_G;
+  if(posX_G <= 0 || posX_G >= width_G) deltaX_G *= -1;
+  if(posY_G <= 0 || posY_G >= height_G) deltaY_G *= -1;
+  floatingGood.style.left = posX_G + 'px';
+  floatingGood.style.top = posY_G + 'px';
+}
+
+setInterval(moveFloating, 20);
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAOqZpA9JiMQltXNRDqcfCp56EcNshmZkE",
+  authDomain: "aaaa-c9d20.firebaseapp.com",
+  projectId: "aaaa-c9d20",
+  storageBucket: "aaaa-c9d20.firebasestorage.app",
+  messagingSenderId: "221373713446",
+  appId: "1:221373713446:web:c26d4d7edb50455d4faae7",
+  measurementId: "G-L2M1ZFSLVZ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+function formatDate(date){
+  const y=date.getFullYear().toString().slice(2);
+  const m=String(date.getMonth()+1).padStart(2,'0');
+  const d=String(date.getDate()).padStart(2,'0');
+  const h=String(date.getHours()).padStart(2,'0');
+  const min=String(date.getMinutes()).padStart(2,'0');
+  const s=String(date.getSeconds()).padStart(2,'0');
+  return `${y}.${m}.${d} ${h}:${min}:${s}`;
+}
+
+// ---- Firestore 렌더링/저장 ----
+async function renderNotes(containerId, arr){
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  arr.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.style.marginBottom = '5px';
+    div.textContent = `${item.timestamp} ${item.text}`;
+    if (containerId === 'ipGood' || containerId === 'ipBad') {
+      const replyBtn = document.createElement('button');
+      replyBtn.textContent = '답글';
+      replyBtn.className = 'replyBtn';
+      replyBtn.onclick = () => showReplyInput(containerId, idx);
+      div.appendChild(replyBtn);
+      if(item.replies){
+        item.replies.forEach((r,i)=>{
+          renderReply(div, r, i+1);
+        });
+      }
+    }
+    container.appendChild(div);
+  });
+}
+
+function renderReply(parentDiv, replyObj, level){
+  const rDiv=document.createElement('div');
+  rDiv.style.marginLeft=`${level*20}px`;
+  rDiv.style.marginTop='3px';
+  rDiv.textContent=`${replyObj.timestamp} ${replyObj.text}`;
+  parentDiv.appendChild(rDiv);
+  if(replyObj.replies){
+    item.replies.forEach((r,i)=>renderReply(parentDiv, r, level+i+1));
+  }
+}
+
+window.showReplyInput = function(containerId, index){
+  const container = document.getElementById(containerId);
+  const parentDiv = container.children[index];
+  if(parentDiv.querySelector('input')) return;
+  const currentReplies = parentDiv.querySelectorAll('div').length;
+  const replyDiv = document.createElement('div');
+  replyDiv.style.marginLeft = `${(currentReplies+1)*20}px`;
+  replyDiv.innerHTML = `<input type="text" placeholder="답글을 입력하세요">`;
+  const input = replyDiv.querySelector('input');
+  input.addEventListener('keypress', e => {
+    if(e.key === 'Enter') saveReply(containerId, index, input.value);
+  });
+  parentDiv.appendChild(replyDiv)
+}
+
+window.saveReply=async function(containerId,index,text){
+  if(!text) return;
+  const docName=containerId==='ipGood'?'good':'bad';
+  const docRef=doc(db,'notes',docName);
+  const docSnap=await getDoc(docRef);
+  let arr=[];
+  if(docSnap.exists()) arr=docSnap.data().texts||[];
+  if(!arr[index].replies) arr[index].replies=[];
+  arr[index].replies.push({text,timestamp:formatDate(new Date())});
+  await setDoc(docRef,{texts:arr});
+  await renderNotes(containerId,arr);
+}
+
+window.saveGood=async function(){
+  const text=document.getElementById("goodText").value;
+  if(!text) return;
+  const docRef=doc(db,'notes','good');
+  const docSnap=await getDoc(docRef);
+  let arr=[];
+  if(docSnap.exists()) arr=docSnap.data().texts||[];
+  arr.push({text, timestamp:formatDate(new Date()), replies: []});
+  await setDoc(docRef,{texts:arr});
+  await renderNotes('goodSaved',arr);
+  await renderNotes('ipGood',arr);
+  document.getElementById("goodText").value='';
+}
+
+window.saveBad=async function(){
+  const text=document.getElementById("badText").value;
+  if(!text) return;
+  const docRef=doc(db,'notes','bad');
+  const docSnap=await getDoc(docRef);
+  let arr=[];
+  if(docSnap.exists()) arr=docSnap.data().texts||[];
+  arr.push({text, timestamp:formatDate(new Date()), replies: []});
+  await setDoc(docRef,{texts:arr});
+  await renderNotes('badSaved',arr);
+  await renderNotes('ipBad',arr);
+  document.getElementById("badText").value='';
+}
+
+// noteS 저장 시 화면에는 표시하지 않음
+window.saveNoteS = async function(){
+  const text = document.getElementById("noteSText").value;
+  if(!text) return;
+  const docRef = doc(db, 'notes', 'noteS');
+  const docSnap = await getDoc(docRef);
+  let arr = [];
+  if(docSnap.exists()) arr = docSnap.data().texts || [];
+  arr.push({text, timestamp: formatDate(new Date())});
+  await setDoc(docRef, {texts: arr});
+  document.getElementById("noteSText").value = '';
+}
+
+// noteIp 영역 렌더링
+async function loadNotes(){
+  const goodSnap = await getDoc(doc(db,'notes','good'));
+  if(goodSnap.exists()){
+    const arr = goodSnap.data().texts || [];
+    await renderNotes('goodSaved', arr);
+    await renderNotes('ipGood', arr);
+  }
+
+  const badSnap = await getDoc(doc(db,'notes','bad'));
+  if(badSnap.exists()){
+    const arr = badSnap.data().texts || [];
+    await renderNotes('badSaved', arr);
+    await renderNotes('ipBad', arr);
+  }
+  // noteS 렌더링 제거
+}
+
+// 투표
+const bar=document.getElementById("voteBar");
+const fill=document.getElementById("voteFill");
+const value=document.getElementById("voteValue");
+
+async function loadVote(){
+  const snap=await getDoc(doc(db,"votes","bar1"));
+  if(snap.exists()){
+    const percent=snap.data().percent;
+    fill.style.width=percent+"%";
+    value.textContent=percent+"%";
+  }
+}
+
+bar.addEventListener("click", async (e)=>{
+  const rect=bar.getBoundingClientRect();
+  const x=e.clientX-rect.left;
+  const percent=Math.round((x/rect.width)*100);
+  fill.style.width=percent+"%";
+  value.textContent=percent+"%";
+  await setDoc(doc(db,"votes","bar1"),{percent});
+});
+
+loadVote();
+loadNotes();
+</script>
+</body>
+</html>
