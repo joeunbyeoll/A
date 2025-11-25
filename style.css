@@ -93,19 +93,19 @@ html, body {
 /* 모바일 대응: 화면 768px 이하 */
 @media screen and (max-width: 768px) {
   .center-text p {
-    font-size: 18px;  /* 기존 16px → 18px로 확대 */
+    font-size: 20px;  /* 기존 16px → 18px로 확대 */
   }
 
   .note {
-    font-size: 16px;  /* 기본 note 글씨 확대 */
+    font-size: 18px;  /* 기본 note 글씨 확대 */
   }
 
   textarea {
-    font-size: 16px;  /* 입력창 글씨 확대 */
+    font-size: 18px;  /* 입력창 글씨 확대 */
   }
 
   button {
-    font-size: 16px;  /* 버튼 글씨 확대 */
+    font-size: 18px;  /* 버튼 글씨 확대 */
   }
 
   .percent-value {
@@ -120,19 +120,19 @@ html, body {
 /* 작은 모바일: 화면 480px 이하 */
 @media screen and (max-width: 480px) {
   .center-text p {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .note {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   textarea {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   button {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .percent-value {
