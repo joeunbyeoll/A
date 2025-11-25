@@ -331,7 +331,7 @@ const value=document.getElementById("voteValue");
 
 async function loadVote(){
   const snap=await getDoc(doc(db,"votes","bar1"));
-  if(snap.exists()){
+  if(snap.exists){
     const percent=snap.data().percent;
     fill.style.width=percent+"%";
     value.textContent=percent+"%";
