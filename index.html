@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>A양</title>
-<link rel="stylesheet" href="a.css">
+<link rel="stylesheet" href="style.css">
 <style>
   #ipGood div, #ipBad div { text-align:left; }
   button.replyBtn { margin-left:5px; }
@@ -19,10 +19,21 @@
 
   <!-- 기존 Good/Bad 영역 -->
   <div id="noteA" class="note" data-group="top" style="display:none;">
-    <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과 
+  <!-- PC용 텍스트 -->
+  <span class="pc-text">
+    <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과
     ---------------------------------------------------------------------------------
     <span class="clickable" onclick="toggleNote('noteBad')">나쁜별</span> 사이<br>
     어떤 조은별
+  </span>
+
+  <!-- 모바일용 텍스트 -->
+  <span class="mobile-text">
+    <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과
+    --------------------------------------------
+    <span class="clickable" onclick="toggleNote('noteBad')">나쁜별</span> 사이<br>
+    <!-- 모바일에서 보여줄 문장 추가 가능 -->
+  </span>
     <div class="two-column">
       <div class="column note" id="noteGood">
         <h4>좋은별에 대한 미담</h4>
