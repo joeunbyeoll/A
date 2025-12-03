@@ -213,6 +213,7 @@ h4 {
     text-align: left;
     border-radius: 0;
     box-shadow: none;
+    border: 1.5px solid #ccc;
   }
 
   #noteGood button,
