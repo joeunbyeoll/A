@@ -175,12 +175,16 @@ h4 {
     outline: none;
   }
 
+ @media screen and (max-width: 768px) {
   #noteGood button,
   #noteBad button,
   #noteSText + button {
-    display: block;
-    margin: 0 auto 10px auto;
+    display: inline-block !important;
+    margin: 6px 0 !important;
+    padding: 4px 8px;   /* 버튼이 너무 넓지 않도록 */
   }
+}
+
 
   .pc-text { display: none !important; }
   .mobile-text { display: inline !important; font-size: 15px; }
