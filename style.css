@@ -33,7 +33,7 @@ html, body {
   display: flex;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap; /* 모바일 줄바꿈 */
+  flex-wrap: wrap; /* 모바일에서 줄바꿈 허용 */
 }
 
 .column {
@@ -45,7 +45,7 @@ html, body {
 textarea {
   width: 100%;
   height: 80px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .clickable {
@@ -110,38 +110,33 @@ textarea {
    반응형 스타일
 ======================= */
 
-/* 모바일 대응: 화면 768px 이하 */
+/* 태블릿/중간 화면: 768px 이하 */
 @media screen and (max-width: 768px) {
   body {
-    font-size: 6px;
+    font-size: 15px;
     line-height: 1.6;
   }
 
-  .center-text p { font-size: 6px; }
-  .note { font-size: 6px; }
-  textarea { font-size: 6px !important; }
-  button { font-size: 6px !important; }
-  .percent-value { font-size: 5vw; }
-  #floatingBad, #floatingGood { 
-      font-size: 6px; 
-      padding: 6px 10px; 
-  }
+  .center-text p { font-size: 15px; }
+  .note { font-size: 14px; }
+  textarea { font-size: 14px !important; }
+  button { font-size: 14px !important; }
+  .percent-value { font-size: 3vw; }
+  #floatingBad, #floatingGood { font-size: 14px; padding: 6px 10px; }
 
-  /* PC 텍스트 숨기고 모바일 텍스트 표시 */
   .pc-text { display: none; }
-  .mobile-text { display: inline; font-size: 12px; }
+  .mobile-text { display: inline; font-size: 15px; }
 
-  /* 두 컬럼 → 한 컬럼으로 변경 */
   .two-column { flex-direction: column; gap: 15px; }
 }
 
-/* 작은 모바일: 화면 480px 이하 */
+/* 모바일: 480px 이하 */
 @media screen and (max-width: 480px) {
-  body { font-size: 12px; line-height: 1.5; }
-  .center-text p { font-size: 24px; }
-  .note { font-size: 12px; }
-  textarea { font-size: 12px !important; }
-  button { font-size: 12px !important; }
-  .percent-value { font-size: 6vw; }
-  #floatingBad, #floatingGood { font-size: 24px; padding: 8px 12px; }
+  body { font-size: 14px; line-height: 1.5; }
+  .center-text p { font-size: 16px; }
+  .note { font-size: 14px; }
+  textarea { font-size: 14px !important; }
+  button { font-size: 14px !important; }
+  .percent-value { font-size: 4vw; }
+  #floatingBad, #floatingGood { font-size: 16px; padding: 6px 10px; }
 }
