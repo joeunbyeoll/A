@@ -155,6 +155,7 @@ h4 {
     text-align: center;
   }
 
+  /* textarea 공통 모바일 스타일 */
   #noteGood textarea,
   #noteBad textarea,
   #noteSText {
@@ -171,7 +172,6 @@ h4 {
     -moz-appearance: none;
     appearance: none;
     box-shadow: none !important;
-    -webkit-box-shadow: none !important;
     outline: none;
   }
 
