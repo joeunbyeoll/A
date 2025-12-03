@@ -155,7 +155,7 @@ textarea {
     font-size: 22px;
   }
 
-  .center-text p { font-size: 6vw; }
+  .center-text p { font-size: 9vw; }
   textarea { font-size: 5vw !important; }
   button { font-size: 5vw !important; }
   .percent-value { font-size: 7vw; }
