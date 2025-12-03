@@ -148,7 +148,9 @@ h4 {
     align-items: center;
     gap: 15px;
   }
-
+  .clickable {
+    font-size: 0.9em;  /* 전체 버튼을 10% 작게 */
+  }
   .column {
     width: 90%;
     max-width: 400px;
