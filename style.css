@@ -129,7 +129,7 @@ textarea {
 
   /* PC 텍스트 숨기고 모바일 텍스트 표시 */
   .pc-text { display: none; }
-  .mobile-text { display: inline; font-size: 22px; }
+  .mobile-text { display: inline; font-size: 12px; }
 
   /* 두 컬럼 → 한 컬럼으로 변경 */
   .two-column { flex-direction: column; gap: 15px; }
