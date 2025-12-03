@@ -185,8 +185,7 @@ h4 {
 
 
   .pc-text { display: none !important; }
-  .mobile-text { display: inline !important; font-size: 15px; }
-}
+ .mobile-text { display: inline !important; }
 
 @media screen and (max-width: 480px) {
   html, body { font-size: 14px; }
