@@ -68,6 +68,7 @@ h4 {
   margin-bottom: 8px;    /* 버튼과 간격 */
   font-size: 14px;
   font-family: 'wjsans', 'qhsownj', sans-serif;
+  align-items: center;
 }
 
 /* 버튼 중앙 정렬 */
