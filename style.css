@@ -113,14 +113,14 @@ textarea {
 /* 모바일 대응: 화면 768px 이하 */
 @media screen and (max-width: 768px) {
   body {
-    font-size: 20px;
+    font-size: 15px;
     line-height: 1.6;
   }
 
-  .center-text p { font-size: 22px; }
-  .note { font-size: 20px; }
-  textarea { font-size: 18px !important; }
-  button { font-size: 18px !important; }
+  .center-text p { font-size: 15px; }
+  .note { font-size: 15px; }
+  textarea { font-size: 15px !important; }
+  button { font-size: 15px !important; }
   .percent-value { font-size: 5vw; }
   #floatingBad, #floatingGood { 
       font-size: 22px; 
