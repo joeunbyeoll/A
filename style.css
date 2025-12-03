@@ -16,6 +16,18 @@ html, body {
   background-color: #fff;
 }
 
+/* ===== 모바일 root 폰트 증가 ===== */
+@media (max-width: 768px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+@media (max-width: 480px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 .center-text {
   text-align: center;
   margin-top: 100px;
@@ -25,7 +37,7 @@ html, body {
   display: none;
   margin-top: 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 15px; /* 기존 14px → 가독성 향상 */
   color: #555;
 }
 
@@ -113,11 +125,13 @@ textarea {
 /* 모바일 대응: 화면 768px 이하 */
 @media screen and (max-width: 768px) {
   .center-text p { font-size: 20px; }
-  .note { font-size: 18px; }
+  .note { font-size: 19px; } /* 기존보다 +1px */
   textarea { font-size: 18px !important; }
   button { font-size: 18px !important; }
   .percent-value { font-size: 5vw; }
-  #floatingBad, #floatingGood { font-size: 14px; }
+
+  /* floating text size 개선 */
+  #floatingBad, #floatingGood { font-size: 16px; }
 
   /* PC 텍스트 숨기고 모바일 텍스트 표시 */
   .pc-text { display: none; }
@@ -130,9 +144,11 @@ textarea {
 /* 작은 모바일: 화면 480px 이하 */
 @media screen and (max-width: 480px) {
   .center-text p { font-size: 18px; }
-  .note { font-size: 16px; }
+  .note { font-size: 18px; }
   textarea { font-size: 16px !important; }
   button { font-size: 16px !important; }
   .percent-value { font-size: 6vw; }
-  #floatingBad, #floatingGood { font-size: 12px; }
+
+  /* floating text size 개선 */
+  #floatingBad, #floatingGood { font-size: 15px; }
 }
