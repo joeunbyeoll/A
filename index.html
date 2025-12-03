@@ -1,301 +1,142 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>A양</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-<style>
-  #ipGood div, #ipBad div { text-align:left; }
-  button.replyBtn { margin-left:5px; }
-</style>
-</head>
-<body>
-<div class="center-text">
-  <p>
-    <span class="clickable" onclick="toggleNote('noteA','top')">A양</span>은
-    <span class="clickable" onclick="toggleNote('noteEo','top')"> 어떤</span>
-    <span class="clickable" onclick="toggleNote('noteS','top')"> 사람</span><span class="clickable" onclick="toggleNote('noteIp','top')">입니까?</span>
-  </p>
-
-  <div id="noteA" class="note" data-group="top" style="display:none;">
-    <span class="pc-text">
-      <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과
-      ---------------------------------------------------------------------------------
-      <span class="clickable" onclick="toggleNote('noteBad')">나쁜별</span> 사이<br>
-      어떤 조은별
-    </span>
-
-    <span class="mobile-text">
-      <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과
-      -------------------------------
-      <span class="clickable" onclick="toggleNote('noteBad')">나쁜별</span> 사이<br>
-      어떤 조은별
-    </span>
-
-    <div class="two-column">
-      <div class="column note" id="noteGood">
-        <h4>좋은별에 대한 미담</h4>
-        <textarea id="goodText" placeholder="좋은별에 대한 미담을 적어주세요"
-          style="width:80%; height:80px;"></textarea>
-        <button onclick="saveGood()">저장</button>
-        <div id="goodSaved" style="white-space:pre-wrap;"></div>
-      </div>
-
-      <div class="column note" id="noteBad">
-        <h4>나쁜별에 대한 음모론</h4>
-        <textarea id="badText" placeholder="나쁜별에 대한 음모론을 적어주세요"
-          style="width:80%; height:80px;"></textarea>
-        <button onclick="saveBad()">저장</button>
-        <div id="badSaved" style="white-space:pre-wrap;"></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="noteEo" class="note" data-group="top">
-    <p>곧 A양의 입장발표가 있겠습니다...</p>
-  </div>
-
-  <div id="noteS" class="note" data-group="top">
-    A양의 매력이 무엇인가요?<br>
-    <textarea id="noteSText" placeholder="솔직하게ㅋㅋ"
-      style="width:30%; height:80px;"></textarea><br>
-    <button onclick="saveNoteS()">저장</button>
-  </div>
-
-  <div id="noteIp" class="note" data-group="top" style="position:relative; min-height:300px;">
-    <p>A양을 두고 벌어지는 갑론을박에 참여하세요</p>
-    <div id="ipGood" style="white-space:normal; margin-bottom:15px;">불러오는 중...</div>
-    <div id="ipBad" style="white-space:normal;">불러오는 중...</div>
-
-    <span id="floatingBad" onclick="goToBad()"
-      style="position:absolute; cursor:pointer; color:black; font-weight:bold;">
-      음모론 퍼뜨리러 가기
-    </span>
-    <span id="floatingGood" onclick="goToGood()"
-      style="position:absolute; cursor:pointer; color:black; font-weight:bold;">
-      미담 퍼뜨리러 가기
-    </span>
-  </div>
-</div>
-
-<script>
-function toggleNote(noteId, group) {
-  const note = document.getElementById(noteId);
-  if (group) {
-    document.querySelectorAll(`.note[data-group='${group}']`).forEach(n => {
-      if (n.id !== noteId) {
-        n.style.display = 'none';
-        n.querySelectorAll('.note').forEach(c => c.style.display = 'none');
-      }
-    });
-  }
-  note.style.display = (note.style.display === 'block') ? 'none' : 'block';
-}
-window.toggleNote = toggleNote;
-
-function goToBad() {
-  toggleNote('noteA');
-  document.getElementById('noteBad').style.display = 'block';
-  document.getElementById('noteBad').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  document.getElementById('noteIp').style.display = 'none';
+/* =======================
+   공통 스타일
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-function goToGood() {
-  toggleNote('noteA');
-  document.getElementById('noteGood').style.display = 'block';
-  document.getElementById('noteGood').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  document.getElementById('noteIp').style.display = 'none';
-}
-window.goToGood = goToGood;
-
-// Floating motion fix
-let posX_B = 0, posY_B = 0;
-let posX_G = 0, posY_G = 0;
-let deltaX_B = 1, deltaY_B = 1;
-let deltaX_G = 1, deltaY_G = 0.3;
-
-function initFloatingPositions() {
-  const container = document.getElementById('noteIp');
-  const floatingBad = document.getElementById('floatingBad');
-  const floatingGood = document.getElementById('floatingGood');
-
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-
-  posX_B = Math.random() * (width - floatingBad.offsetWidth);
-  posY_B = Math.random() * (height - floatingBad.offsetHeight);
-  posX_G = Math.random() * (width - floatingGood.offsetWidth);
-  posY_G = Math.random() * (height - floatingGood.offsetHeight);
-
-  floatingBad.style.left = posX_B + 'px';
-  floatingBad.style.top = posY_B + 'px';
-  floatingGood.style.left = posX_G + 'px';
-  floatingGood.style.top = posY_G + 'px';
-
-  // start animation
-  setInterval(moveFloating, 20);
+html, body {
+  height: 100%;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 16px; /* 기본 폰트 */
+  line-height: 1.6;
+  color: #222;
+  background-color: #fff;
 }
 
-function moveFloating() {
-  const container = document.getElementById('noteIp');
-  const floatingBad = document.getElementById('floatingBad');
-  const floatingGood = document.getElementById('floatingGood');
-
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-
-  posX_B += deltaX_B;
-  posY_B += deltaY_B;
-  if (posX_B <= 0 || posX_B >= width - floatingBad.offsetWidth) deltaX_B *= -1;
-  if (posY_B <= 0 || posY_B >= height - floatingBad.offsetHeight) deltaY_B *= -1;
-  floatingBad.style.left = posX_B + 'px';
-  floatingBad.style.top = posY_B + 'px';
-
-  posX_G += deltaX_G;
-  posY_G += deltaY_G;
-  if (posX_G <= 0 || posX_G >= width - floatingGood.offsetWidth) deltaX_G *= -1;
-  if (posY_G <= 0 || posY_G >= height - floatingGood.offsetHeight) deltaY_G *= -1;
-  floatingGood.style.left = posX_G + 'px';
-  floatingGood.style.top = posY_G + 'px';
-}
-</script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAOqZpA9JiMQltXNRDqcfCp56EcNshmZkE",
-  authDomain: "aaaa-c9d20.firebaseapp.com",
-  projectId: "aaaa-c9d20",
-  storageBucket: "aaaa-c9d20.firebasestorage.app",
-  messagingSenderId: "221373713446",
-  appId: "1:221373713446:web:c26d4d7edb50455d4faae7",
-  measurementId: "G-L2M1ZFSLVZ"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-function formatDate(date) {
-  const y = date.getFullYear().toString().slice(2);
-  return `${y}.${String(date.getMonth()+1).padStart(2,'0')}.${String(date.getDate()).padStart(2,'0')} ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}:${String(date.getSeconds()).padStart(2,'0')}`;
+.center-text {
+  text-align: center;
+  margin-top: 100px;
+  padding: 0 10px;
 }
 
-async function renderNotes(containerId, arr) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = '';
-  arr.forEach((item, idx) => {
-    const div = document.createElement('div');
-    div.style.marginBottom = '5px';
-    div.textContent = `${item.timestamp} ${item.text}`;
-    if (containerId === 'ipGood' || containerId === 'ipBad') {
-      const replyBtn = document.createElement('button');
-      replyBtn.textContent = '답글';
-      replyBtn.className = 'replyBtn';
-      replyBtn.onclick = () => showReplyInput(containerId, idx);
-      div.appendChild(replyBtn);
-      if (item.replies) {
-        item.replies.forEach((r, i) => renderReply(div, r, i + 1));
-      }
-    }
-    container.appendChild(div);
-  });
+.note {
+  display: none;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px; /* <p> 기준 */
+  color: #555;
 }
 
-function renderReply(parentDiv, replyObj, level) {
-  const rDiv = document.createElement('div');
-  rDiv.style.marginLeft = `${level * 20}px`;
-  rDiv.style.marginTop = '3px';
-  rDiv.textContent = `${replyObj.timestamp} ${replyObj.text}`;
-  parentDiv.appendChild(rDiv);
+h4 {
+  font-size: 16px; /* <p> 대비 약간 크게 */
+  margin-bottom: 6px;
 }
 
-window.showReplyInput = function (containerId, index) {
-  const container = document.getElementById(containerId);
-  const parentDiv = container.children[index];
-  if (parentDiv.querySelector('input')) return;
-  const replyDiv = document.createElement('div');
-  replyDiv.style.marginLeft = `20px`;
-  replyDiv.innerHTML = `<input type="text" placeholder="답글을 입력하세요">`;
-  const input = replyDiv.querySelector('input');
-  input.addEventListener('keypress', e => {
-    if (e.key === 'Enter') saveReply(containerId, index, input.value);
-  });
-  parentDiv.appendChild(replyDiv);
-};
-
-window.saveReply = async function (containerId, index, text) {
-  if (!text) return;
-  const docName = containerId === 'ipGood' ? 'good' : 'bad';
-  const docRef = doc(db, 'notes', docName);
-  const docSnap = await getDoc(docRef);
-  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
-  if (!arr[index].replies) arr[index].replies = [];
-  arr[index].replies.push({ text, timestamp: formatDate(new Date()) });
-  await setDoc(docRef, { texts: arr });
-  renderNotes(containerId, arr);
-};
-
-window.saveGood = async function () {
-  const text = document.getElementById("goodText").value;
-  if (!text) return;
-  const docRef = doc(db, 'notes', 'good');
-  const docSnap = await getDoc(docRef);
-  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
-  arr.push({ text, timestamp: formatDate(new Date()), replies: [] });
-  await setDoc(docRef, { texts: arr });
-  renderNotes('goodSaved', arr);
-  renderNotes('ipGood', arr);
-  document.getElementById("goodText").value = '';
-};
-
-window.saveBad = async function () {
-  const text = document.getElementById("badText").value;
-  if (!text) return;
-  const docRef = doc(db, 'notes', 'bad');
-  const docSnap = await getDoc(docRef);
-  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
-  arr.push({ text, timestamp: formatDate(new Date()), replies: [] });
-  await setDoc(docRef, { texts: arr });
-  renderNotes('badSaved', arr);
-  renderNotes('ipBad', arr);
-  document.getElementById("badText").value = '';
-};
-
-window.saveNoteS = async function () {
-  const text = document.getElementById("noteSText").value;
-  if (!text) return;
-  const docRef = doc(db, 'notes', 'noteS');
-  const docSnap = await getDoc(docRef);
-  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
-  arr.push({ text, timestamp: formatDate(new Date()) });
-  await setDoc(docRef, { texts: arr });
-  document.getElementById("noteSText").value = '';
-};
-
-async function loadNotes() {
-  const goodSnap = await getDoc(doc(db, 'notes', 'good'));
-  if (goodSnap.exists()) {
-    const arr = goodSnap.data().texts || [];
-    renderNotes('goodSaved', arr);
-    renderNotes('ipGood', arr);
-  }
-
-  const badSnap = await getDoc(doc(db, 'notes', 'bad'));
-  if (badSnap.exists()) {
-    const arr = badSnap.data().texts || [];
-    renderNotes('badSaved', arr);
-    renderNotes('ipBad', arr);
-  }
-
-  // 🔥 floating animation 시작 위치는 데이터 로딩 끝난 뒤에 실행
-  initFloatingPositions();
+.two-column {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-loadNotes();
-</script>
+.column {
+  flex: 1 1 200px;
+  max-width: 300px;
+  text-align: center;
+  padding: 10px;
+}
 
-</body>
-</html>
+textarea {
+  width: 100%;
+  height: 80px;
+  font-size: 14px;
+}
+
+button {
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: font-weight 0.2s;
+}
+
+.clickable:hover {
+  font-weight: bold;
+}
+
+/* 투표바 스타일 */
+.percent-bar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.percent-bar {
+  width: 80%;
+  max-width: 300px;
+  height: 6px;
+  background-color: #ddd;
+  margin: 0 auto;
+}
+
+.percent-fill {
+  height: 100%;
+  width: 0%;
+  background-color: #4a90e2;
+  transition: width 0.2s ease;
+}
+
+.percent-value {
+  margin-top: 8px;
+  font-size: 14px;
+  font-family: "AlefB", sans-serif;
+}
+
+.ip-container {
+  white-space: normal;
+  word-break: break-word;
+  overflow-x: hidden;
+}
+
+/* PC / 모바일 텍스트 */
+.pc-text { display: inline-block; }
+.mobile-text { display: none; }
+
+/* =======================
+   반응형 스타일
+======================= */
+@media screen and (max-width: 768px) {
+  html, body { font-size: 15px; }
+  .center-text { margin-top: 60px; }
+  .note { font-size: 14px; }
+  h4 { font-size: 15px; }          /* <p> 대비 1px만 차이 */
+  textarea, button { font-size: 14px; }
+  .two-column { flex-direction: column; gap: 15px; }
+  .pc-text { display: none !important; }
+  .mobile-text { display: inline !important; font-size: 15px; }
+}
+
+@media screen and (max-width: 480px) {
+  html, body { font-size: 14px; }
+  .center-text { margin-top: 40px; }
+  .note { font-size: 13px; }
+  h4 { font-size: 14px; }          /* <p>와 동일하게 */
+  textarea, button { font-size: 13px; }
+  .mobile-text { font-size: 14px; }
+}
+
+/* Floating 버튼 */
+#floatingBad, #floatingGood {
+  position: absolute;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
