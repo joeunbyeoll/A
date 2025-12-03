@@ -18,14 +18,10 @@ html, body {
 
 /* ===== 모바일 root 폰트 증가 ===== */
 @media (max-width: 768px) {
-  html {
-    font-size: 17.5px;
-  }
+  html { font-size: 19px; } /* 기존보다 크게 */
 }
 @media (max-width: 480px) {
-  html {
-    font-size: 18px;
-  }
+  html { font-size: 20px; } /* 작은 모바일 더 크게 */
 }
 
 .center-text {
@@ -37,7 +33,7 @@ html, body {
   display: none;
   margin-top: 10px;
   text-align: center;
-  font-size: 15px; /* 기존 14px → 가독성 향상 */
+  font-size: 15px;
   color: #555;
 }
 
@@ -124,18 +120,20 @@ textarea {
 
 /* 모바일 대응: 화면 768px 이하 */
 @media screen and (max-width: 768px) {
-  .center-text p { font-size: 20px; }
-  .note { font-size: 19px; } /* 기존보다 +1px */
-  textarea { font-size: 18px !important; }
-  button { font-size: 18px !important; }
+  .center-text p { font-size: 22px; }
+  .note { font-size: 20px; }
+  textarea { font-size: 19px !important; }
+  button { font-size: 20px !important; }
   .percent-value { font-size: 5vw; }
 
-  /* floating text size 개선 */
-  #floatingBad, #floatingGood { font-size: 16px; }
+  #floatingBad, #floatingGood { font-size: 18px; }
 
-  /* PC 텍스트 숨기고 모바일 텍스트 표시 */
+  /* 모바일 텍스트 표시 */
   .pc-text { display: none; }
-  .mobile-text { display: inline-block; }
+  .mobile-text {
+    display: inline-block;
+    line-height: 1.6;
+  }
 
   /* 두 컬럼 → 한 컬럼으로 변경 */
   .two-column { flex-direction: column; gap: 15px; }
@@ -143,12 +141,11 @@ textarea {
 
 /* 작은 모바일: 화면 480px 이하 */
 @media screen and (max-width: 480px) {
-  .center-text p { font-size: 18px; }
-  .note { font-size: 18px; }
-  textarea { font-size: 16px !important; }
-  button { font-size: 16px !important; }
+  .center-text p { font-size: 20px; }
+  .note { font-size: 19px; }
+  textarea { font-size: 18px !important; }
+  button { font-size: 19px !important; }
   .percent-value { font-size: 6vw; }
 
-  /* floating text size 개선 */
-  #floatingBad, #floatingGood { font-size: 15px; }
+  #floatingBad, #floatingGood { font-size: 17px; }
 }
