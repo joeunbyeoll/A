@@ -10,10 +10,22 @@
 html, body {
   height: 100%;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px; /* 기본 폰트 */
+  font-size: 16px;
   line-height: 1.7;
   color: #222;
   background-color: #fff;
+}
+
+/* ===== 모바일 root 폰트 증가 ===== */
+@media (max-width: 768px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+@media (max-width: 480px) {
+  html {
+    font-size: 18px;
+  }
 }
 
 .center-text {
@@ -25,7 +37,7 @@ html, body {
   display: none;
   margin-top: 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 15px; /* 기존 14px → 가독성 향상 */
   color: #555;
 }
 
@@ -112,24 +124,18 @@ textarea {
 
 /* 모바일 대응: 화면 768px 이하 */
 @media screen and (max-width: 768px) {
-  body {
-    font-size: 20px;
-    line-height: 1.6;
-  }
-
-  .center-text p { font-size: 22px; }
-  .note { font-size: 20px; }
+  .center-text p { font-size: 20px; }
+  .note { font-size: 19px; } /* 기존보다 +1px */
   textarea { font-size: 18px !important; }
   button { font-size: 18px !important; }
   .percent-value { font-size: 5vw; }
-  #floatingBad, #floatingGood { 
-      font-size: 22px; 
-      padding: 6px 10px; 
-  }
+
+  /* floating text size 개선 */
+  #floatingBad, #floatingGood { font-size: 16px; }
 
   /* PC 텍스트 숨기고 모바일 텍스트 표시 */
   .pc-text { display: none; }
-  .mobile-text { display: inline; font-size: 22px; }
+  .mobile-text { display: inline-block; }
 
   /* 두 컬럼 → 한 컬럼으로 변경 */
   .two-column { flex-direction: column; gap: 15px; }
@@ -137,11 +143,12 @@ textarea {
 
 /* 작은 모바일: 화면 480px 이하 */
 @media screen and (max-width: 480px) {
-  body { font-size: 22px; line-height: 1.5; }
-  .center-text p { font-size: 24px; }
-  .note { font-size: 22px; }
-  textarea { font-size: 20px !important; }
-  button { font-size: 20px !important; }
+  .center-text p { font-size: 18px; }
+  .note { font-size: 18px; }
+  textarea { font-size: 16px !important; }
+  button { font-size: 16px !important; }
   .percent-value { font-size: 6vw; }
-  #floatingBad, #floatingGood { font-size: 24px; padding: 8px 12px; }
+
+  /* floating text size 개선 */
+  #floatingBad, #floatingGood { font-size: 15px; }
 }
