@@ -225,6 +225,11 @@ h4 {
     margin: 0 auto 8px auto;
   }
 
+   .clickable {
+    cursor: pointer;
+    font-family: 'wjsans', 'qhsownj', sans-serif !important;
+}
+   
   .mobile-text { font-size: 14px; }
 }
 
