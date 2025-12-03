@@ -149,7 +149,7 @@ h4 {
     gap: 15px;
   }
   .clickable {
-    font-size: 0.9em;  /* 전체 버튼을 10% 작게 */
+    font-size: 0.6em;  /* 전체 버튼을 10% 작게 */
   }
   .column {
     width: 90%;
