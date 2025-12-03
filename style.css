@@ -82,10 +82,6 @@ h4 {
   margin: 0 auto 8px auto;
 }
 
-.clickable {
-  cursor: pointer;
-  transition: font-weight 0.2s;
-}
 
 .clickable:hover {
   font-weight: bold;
