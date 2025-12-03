@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -17,7 +17,6 @@
     <span class="clickable" onclick="toggleNote('noteS','top')"> 사람</span><span class="clickable" onclick="toggleNote('noteIp','top')">입니까?</span>
   </p>
 
-  <!-- noteA 영역 -->
   <div id="noteA" class="note" data-group="top" style="display:none;">
     <span class="pc-text">
       <span class="clickable" onclick="toggleNote('noteGood')">좋은별</span>과
@@ -51,12 +50,10 @@
     </div>
   </div>
 
-  <!-- 퍼센트바 대신 단순 안내문 -->
   <div id="noteEo" class="note" data-group="top">
     <p>곧 A양의 입장발표가 있겠습니다...</p>
   </div>
 
-  <!-- noteS 영역 -->
   <div id="noteS" class="note" data-group="top">
     A양의 매력이 무엇인가요?<br>
     <textarea id="noteSText" placeholder="솔직하게ㅋㅋ"
@@ -64,13 +61,11 @@
     <button onclick="saveNoteS()">저장</button>
   </div>
 
-  <!-- noteIp 영역 -->
   <div id="noteIp" class="note" data-group="top" style="position:relative; min-height:300px;">
     <p>A양을 두고 벌어지는 갑론을박에 참여하세요</p>
     <div id="ipGood" style="white-space:normal; margin-bottom:15px;">불러오는 중...</div>
     <div id="ipBad" style="white-space:normal;">불러오는 중...</div>
 
-    <!-- floating text -->
     <span id="floatingBad" onclick="goToBad()"
       style="position:absolute; cursor:pointer; color:black; font-weight:bold;">
       음모론 퍼뜨리러 가기
@@ -86,8 +81,7 @@
 function toggleNote(noteId, group) {
   const note = document.getElementById(noteId);
   if (group) {
-    const groupNotes = document.querySelectorAll(`.note[data-group='${group}']`);
-    groupNotes.forEach(n => {
+    document.querySelectorAll(`.note[data-group='${group}']`).forEach(n => {
       if (n.id !== noteId) {
         n.style.display = 'none';
         n.querySelectorAll('.note').forEach(c => c.style.display = 'none');
@@ -113,23 +107,22 @@ function goToGood() {
 }
 window.goToGood = goToGood;
 
-// Floating text movement
-const floatingBad = document.getElementById('floatingBad');
-const floatingGood = document.getElementById('floatingGood');
-const container = document.getElementById('noteIp');
-
+// Floating motion fix
 let posX_B = 0, posY_B = 0;
 let posX_G = 0, posY_G = 0;
 let deltaX_B = 1, deltaY_B = 1;
 let deltaX_G = 1, deltaY_G = 0.3;
 
 function initFloatingPositions() {
+  const container = document.getElementById('noteIp');
+  const floatingBad = document.getElementById('floatingBad');
+  const floatingGood = document.getElementById('floatingGood');
+
   const width = container.clientWidth;
   const height = container.clientHeight;
 
   posX_B = Math.random() * (width - floatingBad.offsetWidth);
   posY_B = Math.random() * (height - floatingBad.offsetHeight);
-
   posX_G = Math.random() * (width - floatingGood.offsetWidth);
   posY_G = Math.random() * (height - floatingGood.offsetHeight);
 
@@ -137,11 +130,16 @@ function initFloatingPositions() {
   floatingBad.style.top = posY_B + 'px';
   floatingGood.style.left = posX_G + 'px';
   floatingGood.style.top = posY_G + 'px';
+
+  // start animation
+  setInterval(moveFloating, 20);
 }
-window.onload = initFloatingPositions;
-window.onresize = initFloatingPositions;
 
 function moveFloating() {
+  const container = document.getElementById('noteIp');
+  const floatingBad = document.getElementById('floatingBad');
+  const floatingGood = document.getElementById('floatingGood');
+
   const width = container.clientWidth;
   const height = container.clientHeight;
 
@@ -159,7 +157,6 @@ function moveFloating() {
   floatingGood.style.left = posX_G + 'px';
   floatingGood.style.top = posY_G + 'px';
 }
-setInterval(moveFloating, 20);
 </script>
 
 <script type="module">
@@ -181,12 +178,7 @@ const db = getFirestore(app);
 
 function formatDate(date) {
   const y = date.getFullYear().toString().slice(2);
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  const h = String(date.getHours()).padStart(2, '0');
-  const min = String(date.getMinutes()).padStart(2, '0');
-  const s = String(date.getSeconds()).padStart(2, '0');
-  return `${y}.${m}.${d} ${h}:${min}:${s}`;
+  return `${y}.${String(date.getMonth()+1).padStart(2,'0')}.${String(date.getDate()).padStart(2,'0')} ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}:${String(date.getSeconds()).padStart(2,'0')}`;
 }
 
 async function renderNotes(containerId, arr) {
@@ -203,9 +195,7 @@ async function renderNotes(containerId, arr) {
       replyBtn.onclick = () => showReplyInput(containerId, idx);
       div.appendChild(replyBtn);
       if (item.replies) {
-        item.replies.forEach((r, i) => {
-          renderReply(div, r, i + 1);
-        });
+        item.replies.forEach((r, i) => renderReply(div, r, i + 1));
       }
     }
     container.appendChild(div);
@@ -218,20 +208,14 @@ function renderReply(parentDiv, replyObj, level) {
   rDiv.style.marginTop = '3px';
   rDiv.textContent = `${replyObj.timestamp} ${replyObj.text}`;
   parentDiv.appendChild(rDiv);
-  if (replyObj.replies) {
-    replyObj.replies.forEach((r, i) =>
-      renderReply(parentDiv, r, level + i + 1)
-    );
-  }
 }
 
 window.showReplyInput = function (containerId, index) {
   const container = document.getElementById(containerId);
   const parentDiv = container.children[index];
   if (parentDiv.querySelector('input')) return;
-  const currentReplies = parentDiv.querySelectorAll('div').length;
   const replyDiv = document.createElement('div');
-  replyDiv.style.marginLeft = `${(currentReplies + 1) * 20}px`;
+  replyDiv.style.marginLeft = `20px`;
   replyDiv.innerHTML = `<input type="text" placeholder="답글을 입력하세요">`;
   const input = replyDiv.querySelector('input');
   input.addEventListener('keypress', e => {
@@ -245,12 +229,11 @@ window.saveReply = async function (containerId, index, text) {
   const docName = containerId === 'ipGood' ? 'good' : 'bad';
   const docRef = doc(db, 'notes', docName);
   const docSnap = await getDoc(docRef);
-  let arr = [];
-  if (docSnap.exists()) arr = docSnap.data().texts || [];
+  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
   if (!arr[index].replies) arr[index].replies = [];
   arr[index].replies.push({ text, timestamp: formatDate(new Date()) });
   await setDoc(docRef, { texts: arr });
-  await renderNotes(containerId, arr);
+  renderNotes(containerId, arr);
 };
 
 window.saveGood = async function () {
@@ -258,12 +241,11 @@ window.saveGood = async function () {
   if (!text) return;
   const docRef = doc(db, 'notes', 'good');
   const docSnap = await getDoc(docRef);
-  let arr = [];
-  if (docSnap.exists()) arr = docSnap.data().texts || [];
+  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
   arr.push({ text, timestamp: formatDate(new Date()), replies: [] });
   await setDoc(docRef, { texts: arr });
-  await renderNotes('goodSaved', arr);
-  await renderNotes('ipGood', arr);
+  renderNotes('goodSaved', arr);
+  renderNotes('ipGood', arr);
   document.getElementById("goodText").value = '';
 };
 
@@ -272,12 +254,11 @@ window.saveBad = async function () {
   if (!text) return;
   const docRef = doc(db, 'notes', 'bad');
   const docSnap = await getDoc(docRef);
-  let arr = [];
-  if (docSnap.exists()) arr = docSnap.data().texts || [];
+  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
   arr.push({ text, timestamp: formatDate(new Date()), replies: [] });
   await setDoc(docRef, { texts: arr });
-  await renderNotes('badSaved', arr);
-  await renderNotes('ipBad', arr);
+  renderNotes('badSaved', arr);
+  renderNotes('ipBad', arr);
   document.getElementById("badText").value = '';
 };
 
@@ -286,8 +267,7 @@ window.saveNoteS = async function () {
   if (!text) return;
   const docRef = doc(db, 'notes', 'noteS');
   const docSnap = await getDoc(docRef);
-  let arr = [];
-  if (docSnap.exists()) arr = docSnap.data().texts || [];
+  let arr = docSnap.exists() ? docSnap.data().texts || [] : [];
   arr.push({ text, timestamp: formatDate(new Date()) });
   await setDoc(docRef, { texts: arr });
   document.getElementById("noteSText").value = '';
@@ -297,19 +277,22 @@ async function loadNotes() {
   const goodSnap = await getDoc(doc(db, 'notes', 'good'));
   if (goodSnap.exists()) {
     const arr = goodSnap.data().texts || [];
-    await renderNotes('goodSaved', arr);
-    await renderNotes('ipGood', arr);
+    renderNotes('goodSaved', arr);
+    renderNotes('ipGood', arr);
   }
 
   const badSnap = await getDoc(doc(db, 'notes', 'bad'));
   if (badSnap.exists()) {
     const arr = badSnap.data().texts || [];
-    await renderNotes('badSaved', arr);
-    await renderNotes('ipBad', arr);
+    renderNotes('badSaved', arr);
+    renderNotes('ipBad', arr);
   }
-}
-loadNotes();
 
+  // 🔥 floating animation 시작 위치는 데이터 로딩 끝난 뒤에 실행
+  initFloatingPositions();
+}
+
+loadNotes();
 </script>
 
 </body>
