@@ -82,6 +82,10 @@ h4 {
   margin: 0 auto 8px auto;
 }
 
+.clickable {
+  cursor: pointer;
+  transition: font-weight 0.2s;
+}
 
 .clickable:hover {
   font-weight: bold;
@@ -144,9 +148,7 @@ h4 {
     align-items: center;
     gap: 15px;
   }
-  .clickable {
-    font-size: 0.6em;  /* 전체 버튼을 10% 작게 */
-  }
+
   .column {
     width: 90%;
     max-width: 400px;
@@ -185,7 +187,8 @@ h4 {
 
 
   .pc-text { display: none !important; }
- .mobile-text { display: inline !important; }
+  .mobile-text { display: inline !important; font-size: 15px; }
+}
 
 @media screen and (max-width: 480px) {
   html, body { font-size: 14px; }
@@ -224,12 +227,8 @@ h4 {
     margin: 0 auto 8px auto;
   }
 
-   .clickable {
-    cursor: pointer;
-    font-family: 'wjsans', 'qhsownj', sans-serif !important;
+  .mobile-text { font-size: 14px; }
 }
-   
-
 
 /* Floating 버튼 */
 #floatingBad,
