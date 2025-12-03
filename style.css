@@ -10,7 +10,7 @@
 html, body {
   height: 100%;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 2vw; /* 화면 가로폭 비율 */
+  font-size: 16px;
   line-height: 1.7;
   color: #222;
   background-color: #fff;
@@ -18,34 +18,34 @@ html, body {
 
 .center-text {
   text-align: center;
-  margin-top: 10vh; /* 화면 세로 기준 비율 */
+  margin-top: 100px;
 }
 
 .note {
   display: none;
-  margin-top: 2vh;
+  margin-top: 10px;
   text-align: center;
-  font-size: 1.4vw;
+  font-size: 14px;
   color: #555;
 }
 
 .two-column {
   display: flex;
   justify-content: center;
-  gap: 2vw;
+  gap: 20px;
   flex-wrap: wrap; /* 모바일 줄바꿈 */
 }
 
 .column {
-  width: 20vw;
+  width: 200px;
   text-align: center;
-  padding: 1vw;
+  padding: 10px;
 }
 
 textarea {
   width: 100%;
-  height: 8vh;
-  font-size: 1.6vw;
+  height: 80px;
+  font-size: 12px;
 }
 
 .clickable {
@@ -61,17 +61,17 @@ textarea {
    투표바 스타일
 ======================= */
 .percent-bar-container {
-  width: 90%;
-  max-width: 40vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 2vh;
+  margin-top: 20px;
 }
 
 .percent-bar {
-  width: 100%;
+  width: 40vw;
+  max-width: 300px;
   height: 3vh;
   background-color: #ddd;
   margin: 0 auto;
@@ -99,36 +99,40 @@ textarea {
 /* =======================
    PC / 모바일 텍스트 구분
 ======================= */
-.pc-text { display: inline-block; }
-.mobile-text { display: none; }
+.pc-text {
+  display: inline-block;
+}
+.mobile-text {
+  display: none;
+}
 
 /* =======================
    반응형 스타일
 ======================= */
-@media screen and (max-width: 1024px) {
-  html, body { font-size: 2.5vw; }
-  .note { font-size: 1.8vw; }
-  textarea { font-size: 2vw; }
-  button { font-size: 2vw; }
-  #floatingBad, #floatingGood { font-size: 1.5vw; }
-  .two-column { flex-direction: column; gap: 2vw; }
 
+/* 모바일 대응: 화면 768px 이하 */
+@media screen and (max-width: 768px) {
+  .center-text p { font-size: 20px; }
+  .note { font-size: 18px; }
+  textarea { font-size: 18px !important; }
+  button { font-size: 18px !important; }
+  .percent-value { font-size: 5vw; }
+  #floatingBad, #floatingGood { font-size: 14px; }
+
+  /* PC 텍스트 숨기고 모바일 텍스트 표시 */
   .pc-text { display: none; }
   .mobile-text { display: inline-block; }
+
+  /* 두 컬럼 → 한 컬럼으로 변경 */
+  .two-column { flex-direction: column; gap: 15px; }
 }
 
-@media screen and (max-width: 768px) {
-  html, body { font-size: 3vw; }
-  .note { font-size: 2.2vw; }
-  textarea { font-size: 2.5vw; }
-  button { font-size: 2.5vw; }
-  #floatingBad, #floatingGood { font-size: 2vw; }
-}
-
+/* 작은 모바일: 화면 480px 이하 */
 @media screen and (max-width: 480px) {
-  html, body { font-size: 4vw; }
-  .note { font-size: 3vw; }
-  textarea { font-size: 3.5vw; }
-  button { font-size: 3.5vw; }
-  #floatingBad, #floatingGood { font-size: 2.5vw; }
+  .center-text p { font-size: 18px; }
+  .note { font-size: 16px; }
+  textarea { font-size: 16px !important; }
+  button { font-size: 16px !important; }
+  .percent-value { font-size: 6vw; }
+  #floatingBad, #floatingGood { font-size: 12px; }
 }
